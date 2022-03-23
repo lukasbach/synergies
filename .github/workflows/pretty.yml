@@ -1,0 +1,14 @@
+name: Pretty
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+      - name: Install and Pretty Check 🔧
+        run: | # Install npm packages and run tests
+          yarn
+          yarn prettier:check

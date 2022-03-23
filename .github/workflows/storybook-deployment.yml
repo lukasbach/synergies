@@ -1,0 +1,28 @@
+name: Storybook Deployment
+on: push
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+      - name: Install and Build 🔧
+        run: | # Install npm packages and build the Storybook files
+          yarn
+          npx lerna bootstrap
+          yarn build
+          yarn build-storybook
+          mv ./storybook-static/index.html ./storybook-static/index.htm
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: storybook-static
+          CLEAN: true
+          SINGLE_COMMIT: true
+          # TARGET_FOLDER: docs # The folder that we serve our Storybook files
+          GIT_CONFIG_NAME: deploybot
+          GIT_CONFIG_EMAIL: bot@noreply.lukasbach.com

@@ -1,0 +1,6 @@
+/packages/*/out
+node_modules
+storybook-static
+lerna.json
+/packages/*/jest.config.js
+/**/*.js
