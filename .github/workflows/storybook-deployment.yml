@@ -21,7 +21,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: storybook-static
+          FOLDER: packages/stories/storybook-static
           CLEAN: true
           SINGLE_COMMIT: true
           # TARGET_FOLDER: docs # The folder that we serve our Storybook files

@@ -11,4 +11,4 @@ jobs:
       - name: Install and Pretty Check 🔧
         run: | # Install npm packages and run tests
           yarn
-          yarn prettier:check
+          yarn lint
