@@ -35,6 +35,7 @@ export class Synergy<T extends any[] = any[]> {
   createSelector<R>(selectorFn: (...args: T) => R) {
     const useSelector = () => {
       const getValue = useGetAtomValue();
+      console.log(this.atoms, this);
       const [atomState, listener] = useReducer<() => T>(
         () => this.atoms.map(getValue) as T,
         this.atoms.map(getValue) as T
@@ -87,6 +88,13 @@ export class Synergy<T extends any[] = any[]> {
   getDefaultValue() {
     return this.atoms.reduce((acc, atom) => {
       acc[atom.id] = atom.defaultValue;
+      return acc;
+    }, {});
+  }
+
+  getEmptyListenerObject() {
+    return this.atoms.reduce((acc, atom) => {
+      acc[atom.id] = new Set();
       return acc;
     }, {});
   }

@@ -44,6 +44,17 @@ export interface ProviderContextValue {
   listeners: MutableRefObject<Record<symbol, Set<Listener>>>;
   parent: ProviderContextValue | null;
 }
+/*
+TODO CHANGE TO
+
+export interface ProviderContextValue {
+  atoms: MutableRefObject<Record<symbol, {
+    value: any,
+    listeners: Set<Listener>,
+  }>;
+  parent: ProviderContextValue | null;
+}
+ */
 
 const a: Atom<string> = null as any;
 const b: Atom<number> = null as any;

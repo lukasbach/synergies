@@ -12,7 +12,7 @@ export const Provider = memo(
   function SynergyProvider(props: PropsWithChildren<{ atoms: Synergy[] }>) {
     const parent = useContext(Context);
     const value = useRef(new Synergy(props.atoms).getDefaultValue());
-    const listeners = useRef({});
+    const listeners = useRef(new Synergy(props.atoms).getEmptyListenerObject());
 
     const contextValue = useMemo(
       () => ({

@@ -6,7 +6,8 @@ import produce, { createDraft, finishDraft } from "immer";
 export const ATOM_CONSTRUCTOR = Symbol() as any;
 export const NO_UPDATE = Symbol() as any;
 
-export const createAtom = <T>(defaultValue: T) => new Atom<T>(defaultValue);
+export const createAtom = <T>(defaultValue: T, name?: string) =>
+  new Atom<T>(defaultValue, name);
 export const createSynergy = <T extends any[]>(...atoms: SynergyTuple<T>) =>
   new Synergy<T>(atoms);
 export const arrayIdentity = <T extends any[]>(...x: T) => x;

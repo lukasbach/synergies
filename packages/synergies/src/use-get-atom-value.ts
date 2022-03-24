@@ -9,13 +9,24 @@ export const useGetAtomValue = () => {
     (
       atom: Atom,
       /** @internal */
-      parent?: ProviderContextValue | null
+      parent: ProviderContextValue | null | number = 0
     ) => {
-      if (parent === null) {
-        throw new Error("Atom provider not found");
+      if (!parent && typeof parent !== "number") {
+        console.log("?", parent);
+        throw new Error(`Atom provider ${atom.id.description} not found`);
       }
 
-      const target = parent ?? context;
+      const target =
+        typeof parent === "number" ? context : (parent as ProviderContextValue);
+
+      console.log(
+        "!!",
+        target,
+        atom,
+        Object.prototype.hasOwnProperty.call(target.value.current, atom.id),
+        atom.id in target.value.current
+      );
+
       return Object.prototype.hasOwnProperty.call(target.value.current, atom.id)
         ? target.value.current[atom.id]
         : recursiveResolve(atom, target.parent);

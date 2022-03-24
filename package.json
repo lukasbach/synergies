@@ -10,24 +10,15 @@
   "private": true,
   "scripts": {
     "start": "lerna run start --parallel --npm-client=yarn",
+    "storybook": "lerna run storybook --parallel --npm-client=yarn",
     "build": "lerna run build --npm-client=yarn",
     "test": "lerna run test --npm-client=yarn --stream",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.1.11",
-    "@storybook/addon-docs": "^6.1.11",
-    "@storybook/addon-essentials": "^6.1.11",
-    "@storybook/addon-links": "^6.1.11",
-    "@storybook/addons": "^6.1.11",
-    "@storybook/preset-typescript": "^3.0.0",
-    "@storybook/react": "^6.1.11",
-    "@types/storybook__react": "^5.2.1",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
     "@typescript-eslint/parser": "^5.12.1",
     "eslint": "^8.9.0",
@@ -36,10 +27,6 @@
     "eslint-plugin-react": "^7.28.0",
     "lerna": "^3.22.1",
     "prettier": "^2.6.0",
-    "react-docgen": "^5.3.1",
-    "react-docgen-typescript": "^1.20.5",
-    "react-docgen-typescript-loader": "^3.7.2",
-    "storybook-addon-react-docgen": "^1.2.42",
     "ts-loader": "^8.0.11"
   },
   "workspaces": [
