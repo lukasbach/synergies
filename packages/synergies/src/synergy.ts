@@ -5,16 +5,12 @@ import {
   Flatten,
   SynergyTuple,
 } from "./types";
-import {
-  arrayIdentity,
-  ATOM_CONSTRUCTOR,
-  NO_UPDATE,
-  produceAtoms,
-} from "./helpers";
+import { arrayIdentity, ATOM_CONSTRUCTOR, NO_UPDATE } from "./helpers";
 import { useSubscribe } from "./use-subscribe";
 import { useCallback, useMemo, useReducer } from "react";
 import { useTriggerUpdate } from "./use-trigger-update";
 import { useAtomLookup } from "./use-atom-lookup";
+import { produceAtoms } from "./produce-atoms";
 
 export class Synergy<T extends any[] = any[]> {
   public readonly atoms: AtomTuple<T>;
