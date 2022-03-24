@@ -34,7 +34,7 @@ export type Flatten<
 
 export type AtomDraft<T> = Draft<{
   current: T;
-  trigger: () => void;
+  trigger: () => AtomDraft<T>;
 }>;
 
 export type Listener = () => void;

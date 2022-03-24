@@ -111,4 +111,12 @@ export class Synergy<T extends any[] = any[]> {
   useValue() {
     return this.createSelector(arrayIdentity)();
   }
+
+  useSet() {
+    return this.createAction((...values: T) => (...drafts) => {
+      drafts.forEach((draft, index) => {
+        drafts[index].current = values[index];
+      });
+    })();
+  }
 }

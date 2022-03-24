@@ -8,3 +8,11 @@ addParameters({
   // viewMode: 'docs', // Remove if default view should be canvas mode
   layout: "fullscreen",
 });
+
+export const decorators = [
+  (Story) => (
+    <div style={{ margin: "8px" }}>
+      <Story />
+    </div>
+  ),
+];
