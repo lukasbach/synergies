@@ -35,9 +35,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-dom": "*"
-  },
-  "dependencies": {
+    "react-dom": "*",
     "immer": "^9.0.12"
   }
 }
