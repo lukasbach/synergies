@@ -16,7 +16,8 @@
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "prepublish": "yarn build"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.12.1",
