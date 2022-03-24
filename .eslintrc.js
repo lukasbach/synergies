@@ -26,5 +26,7 @@ module.exports = {
     quotes: ["error", "double"],
     semi: ["error", "always"],
     "react/prop-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off" // TODO
   },
 };

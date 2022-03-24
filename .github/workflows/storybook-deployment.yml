@@ -13,6 +13,7 @@ jobs:
           yarn
           npx lerna bootstrap
           yarn build
+          cd packages/stories
           yarn build-storybook
           mv ./storybook-static/index.html ./storybook-static/index.htm
       - name: Deploy 🚀
