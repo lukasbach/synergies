@@ -1,24 +1,21 @@
 import { Context } from "./context";
-import React, {
-  memo,
-  PropsWithChildren,
-  useContext,
-  useMemo,
-  useRef,
-} from "react";
+import React, { memo, ReactNode, useContext, useMemo, useRef } from "react";
 import { Synergy } from "./synergy";
 
+export interface ProviderProps {
+  atoms: Synergy[];
+  children?: ReactNode | undefined;
+}
+
 export const Provider = memo(
-  function SynergyProvider(props: PropsWithChildren<{ atoms: Synergy[] }>) {
+  function SynergyProvider(props: ProviderProps) {
     const parent = useContext(Context);
-    const value = useRef(new Synergy(props.atoms).getDefaultValue());
-    const listeners = useRef(new Synergy(props.atoms).getEmptyListenerObject());
+    const atoms = useRef(new Synergy(props.atoms).createProviderState());
 
     const contextValue = useMemo(
       () => ({
         parent,
-        value,
-        listeners,
+        atoms,
       }),
       []
     );

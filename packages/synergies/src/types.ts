@@ -39,23 +39,12 @@ export type AtomDraft<T> = Draft<{
 
 export type Listener = () => void;
 
-export interface ProviderContextValue {
-  value: MutableRefObject<Record<symbol, any>>;
-  listeners: MutableRefObject<Record<symbol, Set<Listener>>>;
-  parent: ProviderContextValue | null;
+export interface AtomContextData<T> {
+  value: T;
+  listeners: Set<Listener>;
 }
-/*
-TODO CHANGE TO
 
 export interface ProviderContextValue {
-  atoms: MutableRefObject<Record<symbol, {
-    value: any,
-    listeners: Set<Listener>,
-  }>;
+  atoms: MutableRefObject<Record<symbol, AtomContextData<any>>>;
   parent: ProviderContextValue | null;
 }
- */
-
-const a: Atom<string> = null as any;
-const b: Atom<number> = null as any;
-// a.combine(b).createAction(() => (x, y) => {});

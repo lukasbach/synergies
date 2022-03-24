@@ -3,8 +3,8 @@ import { AtomDraft, AtomTuple, DraftTuple, SynergyTuple } from "./types";
 import { Synergy } from "./synergy";
 import produce, { createDraft, finishDraft } from "immer";
 
-export const ATOM_CONSTRUCTOR = Symbol() as any;
-export const NO_UPDATE = Symbol() as any;
+export const ATOM_CONSTRUCTOR = Symbol("ATOM_CONSTRUCTOR") as any;
+export const NO_UPDATE = Symbol("NO_UPDATE") as any;
 
 export const createAtom = <T>(defaultValue: T, name?: string) =>
   new Atom<T>(defaultValue, name);
@@ -37,34 +37,12 @@ export const produceAtoms = async <T extends any[]>(
     await updateResult;
   }
   return drafts
-    .map(draft =>
+    .map((draft, index) =>
       finishDraft(draft, patches => {
-        atomPatchCount[draft.atomIndex] += patches.length;
+        atomPatchCount[index] += patches.length;
       })
     )
-    .map((value, index) => (atomPatchCount[index] > 0 ? value : NO_UPDATE));
+    .map((value, index) =>
+      atomPatchCount[index] > 0 ? value.current : NO_UPDATE
+    );
 };
-
-/*
-
-  atomBaseValues.reduce(
-    (acc, current, index) => {
-      let hasChanged = false;
-      results.push(
-        produce(
-          {
-            current,
-            trigger: (value?: T[number]) => onTrigger(index, value),
-          },
-          draft => {
-            acc();
-          },
-          patches => {
-            hasChanged = true;
-          }
-        )
-      );
-    },
-    () => {}
-  );
- */

@@ -1,4 +1,10 @@
-import { AtomTuple, DraftTuple, Flatten, SynergyTuple } from "./types";
+import {
+  AtomContextData,
+  AtomTuple,
+  DraftTuple,
+  Flatten,
+  SynergyTuple,
+} from "./types";
 import {
   arrayIdentity,
   ATOM_CONSTRUCTOR,
@@ -7,9 +13,8 @@ import {
 } from "./helpers";
 import { useSubscribe } from "./use-subscribe";
 import { useCallback, useMemo, useReducer } from "react";
-import { useGetAtomValue } from "./use-get-atom-value";
 import { useTriggerUpdate } from "./use-trigger-update";
-import { useSetAtomValue } from "./use-set-atom-value";
+import { useAtomLookup } from "./use-atom-lookup";
 
 export class Synergy<T extends any[] = any[]> {
   public readonly atoms: AtomTuple<T>;
@@ -34,11 +39,14 @@ export class Synergy<T extends any[] = any[]> {
 
   createSelector<R>(selectorFn: (...args: T) => R) {
     const useSelector = () => {
-      const getValue = useGetAtomValue();
-      console.log(this.atoms, this);
+      const lookupAtom = useAtomLookup<T[number]>();
+      const fetch = useCallback(
+        () => this.atoms.map(atom => lookupAtom(atom).value),
+        [lookupAtom]
+      );
       const [atomState, listener] = useReducer<() => T>(
-        () => this.atoms.map(getValue) as T,
-        this.atoms.map(getValue) as T
+        fetch as () => T,
+        fetch() as T
       );
       useSubscribe(this.atoms, listener);
       return useMemo(() => selectorFn(...atomState), [atomState]);
@@ -51,17 +59,17 @@ export class Synergy<T extends any[] = any[]> {
   ) {
     const useAction = () => {
       const triggerUpdate = useTriggerUpdate();
-      const getValue = useGetAtomValue();
-      const setValue = useSetAtomValue();
+      const lookupAtom = useAtomLookup();
       return useCallback(
         async (...args: A) => {
+          const lookedupAtoms = this.atoms.map(atom => lookupAtom(atom));
           const result = await produceAtoms(
-            this.atoms.map(getValue) as T,
+            lookedupAtoms.map(atom => atom.value) as T,
             handler(...args),
             (triggeredAtomIndex: number, updatedValue: any) => {
-              const atom = this.atoms[triggeredAtomIndex];
-              setValue(atom, updatedValue);
-              triggerUpdate([atom]);
+              console.log("Manual trigger");
+              lookedupAtoms[triggeredAtomIndex].value = updatedValue;
+              triggerUpdate([this.atoms[triggeredAtomIndex]]);
             }
           );
           const updatedAtoms = result
@@ -70,33 +78,34 @@ export class Synergy<T extends any[] = any[]> {
                 return null;
               } else {
                 const atom = this.atoms[index];
-                setValue(atom, updatedValue);
+                lookedupAtoms[index].value = updatedValue;
                 return atom;
               }
             })
             .filter(atom => !!atom);
+          console.log("UPDATED", { lookedupAtoms, updatedAtoms, result, args });
           if (updatedAtoms.length > 0) {
             triggerUpdate(updatedAtoms);
           }
         },
-        [handler, triggerUpdate, getValue, setValue]
+        [handler, triggerUpdate, lookupAtom]
       );
     };
     return useAction;
   }
 
-  getDefaultValue() {
-    return this.atoms.reduce((acc, atom) => {
-      acc[atom.id] = atom.defaultValue;
-      return acc;
-    }, {});
-  }
-
-  getEmptyListenerObject() {
-    return this.atoms.reduce((acc, atom) => {
-      acc[atom.id] = new Set();
-      return acc;
-    }, {});
+  /** @internal */
+  createProviderState() {
+    return this.atoms.reduce<Record<symbol, AtomContextData<T[number]>>>(
+      (acc, atom) => {
+        acc[atom.id] = {
+          listeners: new Set(),
+          value: atom.defaultValue,
+        };
+        return acc;
+      },
+      {}
+    );
   }
 
   useValue() {

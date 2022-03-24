@@ -1,31 +1,12 @@
-import { useSynergyContext } from "./use-synergy-context";
 import { useCallback } from "react";
 import { Atom } from "./atom";
-import { Listener, ProviderContextValue } from "./types";
+import { useAtomLookup } from "./use-atom-lookup";
 
 export const useTriggerUpdate = () => {
-  const context = useSynergyContext();
-  const recursiveResolveListeners = useCallback(
-    (atom: Atom, parent?: ProviderContextValue | null) => {
-      if (parent === null) {
-        throw new Error("Atom provider not found");
-      }
-
-      const target = parent ?? context;
-      return Object.prototype.hasOwnProperty.call(
-        target.listeners.current,
-        atom.id
-      )
-        ? target.listeners.current[atom.id]
-        : recursiveResolveListeners(atom, target.parent);
-    },
-    [context]
-  );
-
+  const lookupAtom = useAtomLookup();
   return useCallback((atoms: Atom[]) => {
-    for (const listenerSet of atoms.map<Set<Listener>>(
-      recursiveResolveListeners
-    )) {
+    const listeners = atoms.map(atom => lookupAtom(atom).listeners);
+    for (const listenerSet of listeners) {
       listenerSet.forEach(listener => listener());
     }
   }, []);

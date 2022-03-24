@@ -1,22 +1,20 @@
-import { useSynergyContext } from "./use-synergy-context";
 import { AtomTuple } from "./types";
 import { useEffect } from "react";
+import { useAtomLookup } from "./use-atom-lookup";
 
 export const useSubscribe = <T extends any[]>(
   atoms: AtomTuple<T>,
   listener: () => void
 ) => {
-  const context = useSynergyContext();
-
+  const lookupAtom = useAtomLookup();
   useEffect(() => {
-    // TODO!! resolve parent context
     for (const atom of atoms) {
-      context.listeners.current[atom.id].add(listener);
+      lookupAtom(atom).listeners.add(listener);
     }
     return () => {
       for (const atom of atoms) {
-        context.listeners.current[atom.id].delete(listener);
+        lookupAtom(atom).listeners.delete(listener);
       }
     };
-  });
+  }, [lookupAtom]);
 };
