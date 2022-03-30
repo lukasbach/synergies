@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Box } from "react-boxx";
-import { Atom, Synergy, SynergyProvider } from "synergies";
+import { Atom, MiddlewareProvider, Synergy, SynergyProvider } from "synergies";
+import { action } from "@storybook/addon-actions";
 
 export const VisualBox: FC<{ title: string }> = props => (
   <Box
@@ -113,3 +114,31 @@ export const StringAtomSwitch: FC<{
     </Box>
   );
 };
+
+export const StorybookActionsMiddleware: FC = ({ children }) => (
+  <MiddlewareProvider
+    middlewares={[
+      {
+        // onFinishAction:
+        //   entityName =>
+        //     next =>
+        //       (...values) => {
+        //     console.log(entityName, next, values);
+        //         action(`Action ${entityName ?? "*Unnamed*"} has finished`)();
+        //         next(...values);
+        //       },
+        onTriggerAtoms:
+          () =>
+            next =>
+              (...values) => {
+                action(
+                  `Atoms ${values.map(atom => atom.name).join(", ")} were triggered`
+                )();
+                next(...values);
+              },
+      },
+    ]}
+  >
+    {children}
+  </MiddlewareProvider>
+);

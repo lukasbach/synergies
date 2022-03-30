@@ -48,3 +48,18 @@ export interface ProviderContextValue {
   atoms: MutableRefObject<Record<symbol, AtomContextData<any>>>;
   parent: ProviderContextValue | null;
 }
+
+export type MiddlewarePipingFunction<T extends any[] = any[]> = (
+  entityName?: string
+) => (next: (...values: T) => void) => (...values: T) => void | Promise<void>;
+
+export type Middleware = {
+  onStartAction?: MiddlewarePipingFunction<Atom[]>;
+  onFinishAction?: MiddlewarePipingFunction<Atom[]>;
+  onTriggerAtoms?: MiddlewarePipingFunction<Atom[]>;
+};
+
+export const middlewareOnStartActionName: keyof Middleware = "onStartAction";
+export const middlewareOnFinishAction: keyof Middleware = "onFinishAction";
+export const middlewareOnOnTriggerAtomsName: keyof Middleware =
+  "onTriggerAtoms";

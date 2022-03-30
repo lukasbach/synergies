@@ -1,4 +1,4 @@
 import { useContext } from "react";
-import { Context } from "./context";
+import { SynergyContext } from "./context";
 
-export const useSynergyContext = () => useContext(Context);
+export const useSynergyContext = () => useContext(SynergyContext);

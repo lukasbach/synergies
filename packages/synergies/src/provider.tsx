@@ -1,6 +1,7 @@
-import { Context } from "./context";
+import { SynergyContext } from "./context";
 import React, { memo, ReactNode, useContext, useMemo, useRef } from "react";
 import { Synergy } from "./synergy";
+import { useSynergyContext } from "./use-synergy-context";
 
 export interface ProviderProps {
   atoms: Synergy[];
@@ -9,7 +10,7 @@ export interface ProviderProps {
 
 export const Provider = memo(
   function SynergyProvider(props: ProviderProps) {
-    const parent = useContext(Context);
+    const parent = useSynergyContext();
     const atoms = useRef(new Synergy(props.atoms).createProviderState());
 
     const contextValue = useMemo(
@@ -21,7 +22,9 @@ export const Provider = memo(
     );
 
     return (
-      <Context.Provider value={contextValue}>{props.children}</Context.Provider>
+      <SynergyContext.Provider value={contextValue}>
+        {props.children}
+      </SynergyContext.Provider>
     );
   },
   (prev, next) => {

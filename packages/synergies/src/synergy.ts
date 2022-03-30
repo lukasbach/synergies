@@ -3,6 +3,8 @@ import {
   AtomTuple,
   DraftTuple,
   Flatten,
+  middlewareOnFinishAction,
+  middlewareOnStartActionName,
   SynergyTuple,
 } from "./types";
 import { arrayIdentity, ATOM_CONSTRUCTOR, NO_UPDATE } from "./helpers";
@@ -11,6 +13,7 @@ import { useCallback, useMemo, useReducer } from "react";
 import { useTriggerUpdate } from "./use-trigger-update";
 import { useAtomLookup } from "./use-atom-lookup";
 import { produceAtoms } from "./produce-atoms";
+import { useMiddlewarePipe } from "./use-middleware-pipe";
 
 export class Synergy<T extends any[] = any[]> {
   public readonly atoms: AtomTuple<T>;
@@ -51,14 +54,18 @@ export class Synergy<T extends any[] = any[]> {
   }
 
   createAction<A extends any[]>(
-    handler: (...args: A) => (...drafts: DraftTuple<T>) => void | Promise<void>
+    handler: (...args: A) => (...drafts: DraftTuple<T>) => void | Promise<void>,
+    name?: string
   ) {
     const useAction = () => {
       const triggerUpdate = useTriggerUpdate();
       const lookupAtom = useAtomLookup();
+      const middlewarePipe = useMiddlewarePipe();
       return useCallback(
         async (...args: A) => {
-          const lookedupAtoms = this.atoms.map(atom => lookupAtom(atom));
+          const lookedupAtoms = (
+            await middlewarePipe(middlewareOnStartActionName, name, this.atoms)
+          ).map(atom => lookupAtom(atom));
           const result = await produceAtoms(
             lookedupAtoms.map(atom => atom.value) as T,
             handler(...args),
@@ -68,7 +75,9 @@ export class Synergy<T extends any[] = any[]> {
               triggerUpdate([this.atoms[triggeredAtomIndex]]);
             }
           );
-          const updatedAtoms = result
+          const updatedAtoms = (
+            await middlewarePipe(middlewareOnFinishAction, name, result)
+          )
             .map((updatedValue, index) => {
               if (updatedValue === NO_UPDATE) {
                 return null;
@@ -79,7 +88,6 @@ export class Synergy<T extends any[] = any[]> {
               }
             })
             .filter(atom => !!atom);
-          console.log("UPDATED", { lookedupAtoms, updatedAtoms, result, args });
           if (updatedAtoms.length > 0) {
             triggerUpdate(updatedAtoms);
           }
@@ -109,10 +117,14 @@ export class Synergy<T extends any[] = any[]> {
   }
 
   useSet() {
-    return this.createAction((...values: T) => (...drafts) => {
-      drafts.forEach((draft, index) => {
-        drafts[index].current = values[index];
-      });
-    })();
+    return this.createAction(
+      (...values: T) =>
+        (...drafts) => {
+          drafts.forEach((draft, index) => {
+            drafts[index].current = values[index];
+          });
+        },
+      "set"
+    )();
   }
 }

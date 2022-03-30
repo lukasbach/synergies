@@ -1,6 +1,7 @@
 import React from "react";
 import { createAtom, createSynergy, SynergyProvider } from "synergies";
 import { Button } from "@blueprintjs/core";
+import { StorybookActionsMiddleware } from "./helpers";
 
 const isLoadingAtom = createAtom(false, "isLoading");
 const dataAtom = createAtom<{
@@ -53,9 +54,11 @@ export default {
   title: "Async Server Calls",
   decorators: [
     Story => (
-      <SynergyProvider atoms={[isLoadingAtom, dataAtom]}>
-        <Story />
-      </SynergyProvider>
+      <StorybookActionsMiddleware>
+        <SynergyProvider atoms={[isLoadingAtom, dataAtom]}>
+          <Story />
+        </SynergyProvider>
+      </StorybookActionsMiddleware>
     ),
   ],
 };

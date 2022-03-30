@@ -1,4 +1,7 @@
 import React from "react";
-import { ProviderContextValue } from "./types";
+import { Middleware, ProviderContextValue } from "./types";
 
-export const Context = React.createContext<ProviderContextValue | null>(null);
+export const SynergyContext = React.createContext<ProviderContextValue | null>(
+  null
+);
+export const MiddlewareContext = React.createContext<Middleware[] | null>(null);
