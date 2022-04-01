@@ -22,7 +22,7 @@ export const produceAtoms = async <T extends any[]>(
   atomBaseValues: T,
   updater: (...drafts: DraftTuple<T>) => void | Promise<void>,
   onTrigger: (atomIndex: number, value: T[number]) => void
-) => {
+): Promise<T> => {
   const drafts = atomBaseValues.map((current, index) =>
     createCustomDraft(current, (value, newDraft) => {
       onTrigger(index, value);

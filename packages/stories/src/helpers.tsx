@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Box } from "react-boxx";
-import { Atom, Synergy, SynergyProvider } from "synergies";
+import { Atom, MiddlewareProvider, Synergy, SynergyProvider } from "synergies";
+import { action } from "@storybook/addon-actions";
 
 export const VisualBox: FC<{ title: string }> = props => (
   <Box
@@ -113,3 +114,18 @@ export const StringAtomSwitch: FC<{
     </Box>
   );
 };
+
+export const StorybookActionsMiddleware: FC = ({ children }) => (
+  <MiddlewareProvider
+    middlewares={[
+      next => atoms => {
+        action(
+          `Atoms ${atoms.map(({ atom }) => atom.name).join(", ")} were updated`
+        )();
+        next(atoms);
+      },
+    ]}
+  >
+    {children}
+  </MiddlewareProvider>
+);

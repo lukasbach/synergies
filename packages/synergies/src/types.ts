@@ -48,3 +48,15 @@ export interface ProviderContextValue {
   atoms: MutableRefObject<Record<symbol, AtomContextData<any>>>;
   parent: ProviderContextValue | null;
 }
+
+export type AtomWithValueArray<T extends any[] = any[]> = {
+  [I in keyof T]: { atom: Atom; value: T[I]; prev: T[I] };
+} & { length: T["length"] };
+
+export type MiddlewareNextFunction<T extends any[] = any[]> = (
+  newUpdatedAtoms: AtomWithValueArray<T>
+) => void;
+
+export type Middleware<T extends any[] = any[]> = (
+  next: MiddlewareNextFunction<T>
+) => (updatedAtoms: AtomWithValueArray<T>) => void | Promise<void>;

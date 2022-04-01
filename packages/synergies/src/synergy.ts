@@ -11,6 +11,7 @@ import { useCallback, useMemo, useReducer } from "react";
 import { useTriggerUpdate } from "./use-trigger-update";
 import { useAtomLookup } from "./use-atom-lookup";
 import { produceAtoms } from "./produce-atoms";
+import { useMiddlewarePipe } from "./use-middleware-pipe";
 
 export class Synergy<T extends any[] = any[]> {
   public readonly atoms: AtomTuple<T>;
@@ -56,6 +57,7 @@ export class Synergy<T extends any[] = any[]> {
     const useAction = () => {
       const triggerUpdate = useTriggerUpdate();
       const lookupAtom = useAtomLookup();
+      const middlewarePipe = useMiddlewarePipe();
       return useCallback(
         async (...args: A) => {
           const lookedupAtoms = this.atoms.map(atom => lookupAtom(atom));
@@ -63,12 +65,19 @@ export class Synergy<T extends any[] = any[]> {
             lookedupAtoms.map(atom => atom.value) as T,
             handler(...args),
             (triggeredAtomIndex: number, updatedValue: any) => {
-              console.log("Manual trigger");
               lookedupAtoms[triggeredAtomIndex].value = updatedValue;
               triggerUpdate([this.atoms[triggeredAtomIndex]]);
             }
           );
-          const updatedAtoms = result
+          const pipedAtoms = await middlewarePipe(
+            result.map((value, index) => ({
+              atom: this.atoms[index],
+              prev: lookedupAtoms[index].value,
+              value,
+            }))
+          );
+          const updatedAtoms = pipedAtoms
+            .map(({ value }) => value)
             .map((updatedValue, index) => {
               if (updatedValue === NO_UPDATE) {
                 return null;
@@ -79,7 +88,6 @@ export class Synergy<T extends any[] = any[]> {
               }
             })
             .filter(atom => !!atom);
-          console.log("UPDATED", { lookedupAtoms, updatedAtoms, result, args });
           if (updatedAtoms.length > 0) {
             triggerUpdate(updatedAtoms);
           }

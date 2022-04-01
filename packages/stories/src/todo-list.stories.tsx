@@ -1,14 +1,19 @@
 import { createAtom, createSynergy, SynergyProvider } from "synergies";
 import { Button, Checkbox, ControlGroup, InputGroup } from "@blueprintjs/core";
 import React from "react";
+import { StorybookActionsMiddleware } from "./helpers";
 
-const filterAtom = createAtom(false);
-const itemsAtom = createAtom<Array<{ todo: string; checked: boolean }>>([
-  { todo: "First Todo", checked: true },
-  { todo: "Second Todo", checked: false },
-  { todo: "Third Todo", checked: false },
-]);
-const inputValueAtom = createAtom("");
+// Atom name is optional and for debugging through middleware
+const filterAtom = createAtom(false, "filter");
+const itemsAtom = createAtom<Array<{ todo: string; checked: boolean }>>(
+  [
+    { todo: "First Todo", checked: true },
+    { todo: "Second Todo", checked: false },
+    { todo: "Third Todo", checked: false },
+  ],
+  "items"
+);
+const inputValueAtom = createAtom("", "input");
 
 const useFilteredItems = createSynergy(itemsAtom, filterAtom).createSelector(
   (items, filter) => items.filter(({ checked }) => !filter || checked)
@@ -78,15 +83,17 @@ export const Example = () => (
   // We don't have to nest the providers so extremely, but this demonstrates how you can inject
   // atoms at any place in the hierarchy and they can still communicate upwards with other
   // atoms.
-  <SynergyProvider atoms={[filterAtom]}>
-    <FilterButton />
-    <SynergyProvider atoms={[itemsAtom]}>
-      <List />
-      <SynergyProvider atoms={[inputValueAtom]}>
-        <TodoInput />
+  <StorybookActionsMiddleware>
+    <SynergyProvider atoms={[filterAtom]}>
+      <FilterButton />
+      <SynergyProvider atoms={[itemsAtom]}>
+        <List />
+        <SynergyProvider atoms={[inputValueAtom]}>
+          <TodoInput />
+        </SynergyProvider>
       </SynergyProvider>
     </SynergyProvider>
-  </SynergyProvider>
+  </StorybookActionsMiddleware>
 );
 
 export default {
