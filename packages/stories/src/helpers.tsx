@@ -121,7 +121,7 @@ export const StorybookActionsMiddleware: FC = ({ children }) => (
       next => atoms => {
         action(
           `Atoms ${atoms.map(({ atom }) => atom.name).join(", ")} were updated`
-        )();
+        )(atoms);
         next(atoms);
       },
     ]}

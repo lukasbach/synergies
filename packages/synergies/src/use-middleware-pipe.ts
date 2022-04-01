@@ -25,7 +25,7 @@ export const useMiddlewarePipe = () => {
   const context = useMiddlewareContext();
   return useCallback(
     async <P extends AtomWithValueArray>(atoms: P): Promise<P> =>
-      await compose(context ?? [], atoms),
+      await compose(context ? [...context] : [], atoms),
     [context]
   );
 };
