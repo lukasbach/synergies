@@ -16,6 +16,23 @@ const config = {
   organizationName: 'lukasbach', // Usually your GitHub org/user name.
   projectName: 'synergies', // Usually your repo name.
 
+  plugins: [
+    [
+      'docusaurus-plugin-typedoc',
+
+      // Plugin / TypeDoc options
+      {
+        entryPoints: ['../synergies/src/index.ts'],
+        tsconfig: '../synergies/tsconfig.json',
+        sidebar: {
+          categoryLabel: 'API',
+          position: 3,
+          fullNames: true,
+        },
+      },
+    ],
+  ],
+
   presets: [
     [
       'classic',
@@ -49,7 +66,7 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'getstarted',
             position: 'left',
             label: 'Docs',
           },

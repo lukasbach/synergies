@@ -6,25 +6,33 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #5E81AC;
+  --ifm-color-primary-dark: #55749b;
+  --ifm-color-primary-darker: #4b678a;
+  --ifm-color-primary-darkest: #425a78;
+  --ifm-color-primary-light: #6e8eb4;
+  --ifm-color-primary-lighter: #7e9abd;
+  --ifm-color-primary-lightest: #8ea7c5;
   --ifm-code-font-size: 95%;
+
+  --ifm-navbar-background-color: #ECEFF4;
+  --ifm-code-background: #E5E9F0;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #88c0d0;
+  --ifm-color-primary-dark: #7aadbb;
+  --ifm-color-primary-darker: #6d9aa6;
+  --ifm-color-primary-darkest: #5f8692;
+  --ifm-color-primary-light: #94c6d5;
+  --ifm-color-primary-lighter: #a0cdd9;
+  --ifm-color-primary-lightest: #acd3de;
+
+  --ifm-navbar-background-color: #4C566A;
+  --ifm-background-surface-color: #2E3440;
+  --ifm-background-color: #2E3440 !important;
+  --ifm-code-background: #4C566A;
 }
 
 .docusaurus-highlight-code-line {
