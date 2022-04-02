@@ -72,7 +72,7 @@ const config = {
             label: 'Docs',
           },
           {
-            href: '/storybook',
+            href: 'https://synergies.js.org',
             label: 'Storybook',
             position: 'left',
           },
@@ -109,7 +109,7 @@ const config = {
               },
               {
                 label: 'Storybook',
-                to: "/storybook",
+                to: "https://synergies.js.org",
               },
             ],
           },
