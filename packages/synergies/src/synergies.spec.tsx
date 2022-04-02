@@ -4,12 +4,12 @@ import {
   createSynergy,
   Middleware,
   MiddlewareProvider,
-} from "../src";
+} from ".";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { WrapperComponent } from "@testing-library/react-hooks/src/types/react";
 import React from "react";
 import { RenderHookResult } from "@testing-library/react-hooks/src/types";
-import { NO_UPDATE } from "../src/helpers";
+import { NO_UPDATE } from "./helpers";
 
 describe("synergies", () => {
   const atomA = createAtom(1, "a");
@@ -46,6 +46,7 @@ describe("synergies", () => {
     },
     wrapper = defaultWrapper
   ) => {
+    // TODO additionally render a useEffect hook with the result as dependency, to check for unnecessary rerenders
     return renderHook(
       () => {
         return Object.entries(hooks).reduce(
