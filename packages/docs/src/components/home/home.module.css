@@ -23,7 +23,13 @@
   font-size: 5rem;
   margin-bottom: 40px;
   font-weight: 900;
-  display: inline-block;
+  display: inline-flex;
+}
+
+.header > svg {
+  width: 5rem;
+  margin-left: -7rem;
+  margin-right: 2rem;
 }
 
 .marginTop {
@@ -46,6 +52,9 @@
   margin-left: 140px;
 }
 .sidesInverted {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-direction: row-reverse;
 }
 
@@ -55,6 +64,7 @@
   border-radius: 12px;
   text-align: left;
   display: inline-block;
+  margin-bottom: 0 !important;
 }
 
 .red {
@@ -160,6 +170,11 @@
 }
 
 @media (max-width: 1800px) {
+  .header > svg {
+    width: 5rem;
+    margin-left: 0;
+    margin-right: 2rem;
+  }
   .container {
     padding: 120px 80px;
   }

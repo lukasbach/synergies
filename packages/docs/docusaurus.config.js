@@ -61,7 +61,8 @@ const config = {
         title: 'Synergies',
         logo: {
           alt: 'Synergies Logo',
-          src: 'img/logo.svg',
+          srcDark: 'img/logo.svg',
+          src: 'img/logo-dark.svg',
         },
         items: [
           {
@@ -90,43 +91,55 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Get Started',
+                to: '/docs/getstarted',
+              },
+              {
+                label: 'API Docs',
+                to: '/docs/api',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Project',
             items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: "https://github.com/lukasbach/synergies",
+              },
+              {
+                label: 'Storybook',
+                to: "/storybook",
+              },
+            ],
+          },
+          {
+            title: 'More from me',
+            items: [
+              {
+                label: 'My GitHub profile',
+                href: 'https://github.com/lukasbach',
+              },
+              {
+                label: 'My personal homepage',
+                href: 'https://lukasbach.com',
+              },
+              {
+                label: 'Yana',
+                href: 'https://yana.js.org',
+              },
+              {
+                label: 'DevSession',
+                href: 'https://devsession.js.org',
+              },
+              {
+                label: 'React Complex Tree',
+                href: 'https://rct.lukasbach.com',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} <a href="https://lukasbach.com" target="_blank">Lukas Bach</a>. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,

@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { Code } from "./code";
 import Link from "@docusaurus/Link";
 import VisAppComponents from "../../../static/img/vis-app-components.svg";
+import Logo from "../../../static/img/logo.svg";
 
 // TODO mention performance
 
@@ -117,6 +118,17 @@ const Orange: React.FC = ({ children }) => (
   <span className={styles.orange}>{children}</span>
 );
 
+const Ctas = () => (
+  <div className={clsx(styles.highlight)}>
+    <Link to="/docs/getstarted" className={clsx(styles.primaryCta)}>
+      Get Started
+    </Link>
+    <Link to="/docs/api" className={clsx(styles.primaryCta)}>
+      Documentation
+    </Link>
+  </div>
+);
+
 export const Home: React.FC<{}> = props => {
   const { siteConfig } = useDocusaurusContext();
   console.log(siteConfig);
@@ -128,6 +140,7 @@ export const Home: React.FC<{}> = props => {
     >
       <div className={styles.container}>
         <div className={clsx(styles.title, styles.blue, styles.header)}>
+          <Logo />
           Synergies
         </div>
         <div className={styles.menu}>
@@ -161,19 +174,12 @@ export const Home: React.FC<{}> = props => {
           </div>
         </div>
 
-        <div className={clsx(styles.highlight)}>
-          <Link to="/docs/getstarted" className={clsx(styles.primaryCta)}>
-            Get Started
-          </Link>
-          <Link to="/docs/getstarted" className={clsx(styles.primaryCta)}>
-            Documentation
-          </Link>
-        </div>
+        <Ctas />
 
         <div className={clsx(styles.sides, styles.sidesInverted)}>
           <div className={clsx(styles.title)}>
-            Create an <span className={styles.green}>application state</span>{" "}
-            that follows the{" "}
+            An <span className={styles.green}>application state</span> that
+            follows the{" "}
             <span className={styles.purple}>hierarchical structure</span> of
             your components.
           </div>
@@ -181,16 +187,16 @@ export const Home: React.FC<{}> = props => {
         </div>
 
         <div className={clsx(styles.highlight, styles.statement, styles.right)}>
-          First there was <Red>Redux</Red>. Than there was{" "}
+          First there was <Red>Flux</Red>. Than there was{" "}
           <Purple>Context</Purple>. Now there is <Green>Synergies</Green>.
         </div>
 
         <p className={clsx(styles.text)}>
-          In the past, Redux was the goto for state management. With React{"'"}s
-          revamp of context, storing localized reusable state in custom context
-          providers become more common. You don{"'"}t need to define the
-          complete state in one place, you can reuse pieces of state, and
-          compose them however you want. But there remain issues...
+          In the past, Flux-like libraries were the goto for state management.
+          With React{"'"}s revamp of context, storing localized reusable state
+          in custom context providers become more common. You don{"'"}t need to
+          define the complete state in one place, you can reuse pieces of state,
+          and compose them however you want. But there remain issues...
         </p>
 
         <div className={clsx(styles.highlight, styles.statement, styles.left)}>
@@ -200,10 +206,14 @@ export const Home: React.FC<{}> = props => {
         </div>
 
         <p className={clsx(styles.text)}>
-          Synergies solves those issues by streamlining the way how global and
-          local context-based state is defined and managed, provides an clear
-          and concise logic for deciding which component should rerender and
-          which should not, and makes exchange between substates super easy!
+          Synergies{" "}
+          <b>
+            <Green>solves those issues</Green>
+          </b>{" "}
+          by streamlining the way how global and local context-based state is
+          defined and managed, provides an clear and concise logic for deciding
+          which component should rerender and which should not, and makes
+          exchange between substates super easy!
         </p>
 
         <div
@@ -256,7 +266,39 @@ export const Home: React.FC<{}> = props => {
           with more globalized state further up in the hierarchy.
         </p>
 
-        <div className={clsx(styles.highlight, styles.statement, styles.right)}>
+        <div
+          className={clsx(
+            styles.highlight,
+            styles.statement,
+            styles.marginTopBig,
+            styles.left
+          )}
+        >
+          Avoid <Purple>unnecessary rerenders</Purple>.
+        </div>
+
+        <div className={clsx(styles.text, styles.marginTop)}>
+          When accessing atom state, you do so by defining synergies of atoms
+          and then specify selectors or actions on them. If you use a selector
+          in a component, the component will rerender once one of the atoms
+          updated from which it reads. However, when you define an action on a
+          synergy of atoms, some of which are read from and only some are
+          written to, dispatching the action will only update the atoms that
+          actually are written to.
+        </div>
+
+        <div className={clsx(styles.marginTop, styles.highlight)}>
+          <Code code={optimizedRerenderCode} />
+        </div>
+
+        <div
+          className={clsx(
+            styles.highlight,
+            styles.statement,
+            styles.right,
+            styles.marginTopBig
+          )}
+        >
           <span className={styles.red}>Hunks?</span> No more!
         </div>
 
@@ -265,40 +307,22 @@ export const Home: React.FC<{}> = props => {
         >
           <div className={clsx(styles.title)}>
             Write <span className={styles.red}>asynchronous update logic</span>{" "}
-            and trigger rerenders on demand.{" "}
-            <span className={styles.green}>
-              Only components subscribing to the updated atoms will rerender.
-            </span>
+            and trigger rerenders on demand. Only components{" "}
+            <Green>subscribing to the updated atoms</Green> will rerender.
           </div>
           <div className={clsx()}>
             <Code code={asyncCode} />
           </div>
         </div>
 
-        <div className={clsx(styles.text, styles.marginTop)}>
-          But I must explain to you how all this mistaken idea of denouncing
-          pleasure and praising pain was born and I will give you a complete
-          account of the system, and expound the actual teachings of the great
-          explorer of the truth, the{" "}
-          <span className={styles.red}>asynchronous update logic</span> of human
-          happiness. No one rejects, dislikes, or avoids pleasure itself,
-          because it is pleasure, but because those who do not know how to
-          pursue pleasure rationally encounter consequences that are extremely
-          painful. Nor again is there anyone who loves or pursues or desires to
-          obtain pain of itself, because it is pain, but because occasionally
-          circumstances occur in which toil and pain can procure him some great
-          pleasure. To take a trivial example, which of us ever undertakes
-          laborious physical exercise, except to obtain some advantage from it?
-          But who has any right to find fault with a man who chooses to enjoy a
-          pleasure that has no annoying consequences, or one who avoids a pain
-          that produces no resultant pleasure?
-        </div>
-
-        <div className={clsx(styles.marginTop, styles.highlight)}>
-          <Code code={optimizedRerenderCode} />
-        </div>
-
-        <div className={clsx(styles.highlight, styles.statement, styles.left)}>
+        <div
+          className={clsx(
+            styles.highlight,
+            styles.statement,
+            styles.left,
+            styles.marginTopBig
+          )}
+        >
           <span className={styles.green}>Global State.</span>
           <br />
           <span className={styles.purple}>Local State.</span>
@@ -317,19 +341,48 @@ export const Home: React.FC<{}> = props => {
           a global synergy provider, and a list state in a localized provider
           within your list component for list items to consume. You can have
           many lists, each sharing the same atoms, but with their unique list
-          state supplied by their respective provider.
+          state supplied by their respective provider. Also, you can define
+          synergies that access both the localized list state and global
+          authentication state.
         </p>
 
-        <div className={clsx(styles.highlight, styles.statement, styles.left)}>
-          Use for everything! Or some things.
+        <div
+          className={clsx(
+            styles.highlight,
+            styles.statement,
+            styles.left,
+            styles.marginTopBig
+          )}
+        >
+          Use for <Yellow>everything</Yellow>! Or <Red>some things</Red>.
         </div>
+
         <div className={clsx(styles.marginTop, styles.sides)}>
-          <div className={clsx(styles.title)}>3kB + immer</div>
-          <p className={clsx(styles.text)}>
+          <div className={clsx(styles.title, styles.green)}>3kB + immer</div>
+          <p className={clsx(styles.text, styles.right)}>
             synergies uses immer for immutable data structures. Apart from that,
-            only 3kB of gzipped code is added by using synergies. TODO
+            only 3kB of gzipped code is added by using synergies.
           </p>
         </div>
+
+        <div className={clsx(styles.marginTop, styles.sides)}>
+          <div className={clsx(styles.title, styles.red)}>Typesafe</div>
+          <p className={clsx(styles.text, styles.right)}>
+            Complete typesafety is provided by Typescript declarations.
+          </p>
+        </div>
+
+        <div className={clsx(styles.marginTop, styles.sides)}>
+          <div className={clsx(styles.title, styles.purple)}>
+            Supports Middlewares
+          </div>
+          <p className={clsx(styles.text, styles.right)}>
+            Use the well-known concept of middlewares to track errors, log state
+            changes or debug issues.
+          </p>
+        </div>
+
+        <Ctas />
       </div>
     </Layout>
   );
