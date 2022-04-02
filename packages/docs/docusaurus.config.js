@@ -8,8 +8,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Synergies',
   tagline: 'Synergyze your state!',
-  url: 'https://synergies.lukasbach.com',
-  baseUrl: '/',
+  url: 'https://lukasbach.github.io/', // TODO
+  baseUrl: '/synergies/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
