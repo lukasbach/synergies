@@ -13,15 +13,16 @@ jobs:
           yarn
           npx lerna bootstrap
           yarn build
-          cd packages/stories
-          yarn build-storybook
-          mv ./storybook-static/index.html ./storybook-static/index.htm
+          yarn build:storybook
+          yarn build:docs
+          mv ./packages/stories/storybook-static/index.html ./packages/stories/storybook-static/index.htm
+          mv ./packages/stories/storybook-static ./packages/docs/build/storybook
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: packages/stories/storybook-static
+          FOLDER: packages/docs/build
           CLEAN: true
           SINGLE_COMMIT: true
           # TARGET_FOLDER: docs # The folder that we serve our Storybook files
