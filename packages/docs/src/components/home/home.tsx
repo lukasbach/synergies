@@ -194,7 +194,7 @@ export const Home: React.FC<{}> = props => {
         <p className={clsx(styles.text)}>
           In the past, Flux-like libraries were the goto for state management.
           With React{"'"}s revamp of context, storing localized reusable state
-          in custom context providers become more common. You don{"'"}t need to
+          in custom context providers became more common. You don{"'"}t need to
           define the complete state in one place, you can reuse pieces of state,
           and compose them however you want. But there remain issues...
         </p>
@@ -211,7 +211,7 @@ export const Home: React.FC<{}> = props => {
             <Green>solves those issues</Green>
           </b>{" "}
           by streamlining the way how global and local context-based state is
-          defined and managed, provides an clear and concise logic for deciding
+          defined and managed, provides clear and concise logic for deciding
           which component should rerender and which should not, and makes
           exchange between substates super easy!
         </p>

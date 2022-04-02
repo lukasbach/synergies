@@ -2,7 +2,32 @@
 sidebar_position: 1
 ---
 
-# Create a Page
+
+# Basic Concepts
+
+```md title="docs/hello.md" {1-4}
+---
+sidebar_label: 'Hi!'
+sidebar_position: 3
+---
+
+# Hello
+
+This is my **first Docusaurus document**!
+```
+
+```js title="sidebars.js"
+module.exports = {
+  tutorialSidebar: [
+    {
+      type: 'category',
+      label: 'Tutorial',
+      // highlight-next-line
+      items: ['hello'],
+    },
+  ],
+};
+```
 
 Add **Markdown or React** files to `src/pages` to create a **standalone page**:
 
