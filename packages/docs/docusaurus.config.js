@@ -9,7 +9,7 @@ const config = {
   title: 'Synergies',
   tagline: 'Synergyze your state!',
   url: 'https://lukasbach.github.io/', // TODO
-  baseUrl: '/synergies/',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
