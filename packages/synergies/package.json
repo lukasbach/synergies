@@ -16,7 +16,7 @@
     "start": "tsc -w",
     "build": "tsc",
     "test": "jest --passWithNoTests",
-    "prepublish": "cpy \"../../README.md\" ."
+    "prepublish": "tsc && jest && cpy \"../../README.md\" ."
   },
   "devDependencies": {
     "@babel/preset-env": "^7.12.11",
