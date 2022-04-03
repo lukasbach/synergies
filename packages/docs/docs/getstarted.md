@@ -4,44 +4,72 @@ sidebar_position: 1
 
 # Get Started
 
-Let's discover **Docusaurus in less than 5 minutes**.
-
-## Getting Started
-
-Get started by **creating a new site**.
-
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
+To start, you will need to install it and `immer` to your React project.
 
 ```bash
-npm init docusaurus@latest my-website classic
+$ yarn add synergies immer
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+You can then import the `Synergies` package and start using it:
 
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
+```typescript
+import { createAtom, createSynergy, SynergyProvider } from "synergies";
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+## Basic Usage
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+Create your first state atoms:
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+```typescript jsx
+const valueAtom = createAtom("");
+const isInitialStateAtom = createAtom(true);
+```
+
+Synergyze your atoms to create React Hooks:
+
+```typescript jsx
+const useSetValue = createSynergy(valueAtom, isInitialStateAtom).createAction(
+  (newValue: string) => (valueDraft, isInitialStateDraft) => {
+    // Components that read from the value atom will be updated.
+    valueDraft.current = newValue;
+    
+    if (isInitialStateDraft.current) {
+      // If isInitialState is already false, then the draft will not be updated,
+      // and components that read from it will not trigger a rerender.
+      isInitialStateDraft.current = false;
+    }
+  }
+);
+
+// Every atom is also a synergy of itself, so we can call `createSelector` also on atoms.
+const useValue = valueAtom.createSelector(value => value);
+const useIsInitialState = isInitialStateAtom.useValue; // shortcut for directly reading atom state
+```
+
+Provide your atoms:
+
+```typescript jsx
+<SynergyProvider atoms={[valueAtom, isInitialStateAtom]}>
+  {/* Components that consume value and isInitialState... */}
+
+  {/* We can also nest other synergy providers */}
+  <SynergyProvider atoms={[moreLocalizedAtom]}>
+    {/* Can read from and write to all three atoms. */}
+  </SynergyProvider>
+</SynergyProvider>
+```
+
+Use your hooks:
+
+```typescript jsx
+const Component = () => {
+  const setValue = useSetValue();
+  const value = useValue();
+  return (
+    <input 
+      value={value}
+      onChange={e => setValue(e.target.value)}
+    />
+  )
+}
+```

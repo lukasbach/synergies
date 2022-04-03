@@ -51,7 +51,7 @@ const selectorCode = `
 const useTickedTodos = createSynergy(todosAtom, tickedTodosAtom)
   .createSelector(
     (todos, tickedTodos) =>
-      todos.filter(todo => tickedTodos.current.includes(todo))
+      todos.filter(todo => tickedTodos.includes(todo))
   );
   
 const useAllTodos = todosAtom.useValue;
@@ -65,7 +65,7 @@ const useTickTodo = createSynergy(todosAtom, tickedTodosAtom)
 const useTickedTodos = createSynergy(todosAtom, tickedTodosAtom)
   .createSelector(
     (todos, tickedTodos) =>
-      todos.filter(todo => tickedTodos.current.includes(todo))
+      todos.filter(todo => tickedTodos.includes(todo))
   );
 const useAllTodos = todosAtom.useValue;
 `.trim();
