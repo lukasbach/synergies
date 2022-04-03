@@ -78,6 +78,11 @@ const config = {
           },
           // {to: '/blog', label: 'Blog', position: 'left'},
           {
+            label: 'Community',
+            href: "https://github.com/lukasbach/synergies/discussions/1",
+            position: 'right',
+          },
+          {
             href: 'https://github.com/lukasbach/synergies',
             label: 'GitHub',
             position: 'right',
@@ -106,6 +111,10 @@ const config = {
               {
                 label: 'GitHub',
                 href: "https://github.com/lukasbach/synergies",
+              },
+              {
+                label: 'Community',
+                href: "https://github.com/lukasbach/synergies/discussions/1",
               },
               {
                 label: 'Storybook',
