@@ -1,4 +1,4 @@
-name: Storybook Deployment
+name: Deployment
 on: push
 jobs:
   build-and-deploy:
@@ -17,6 +17,7 @@ jobs:
           yarn build:docs
           mv ./packages/stories/storybook-static/index.html ./packages/stories/storybook-static/index.htm
           mv ./packages/stories/storybook-static ./packages/docs/build/storybook
+          echo 'synergies.js.org' >> ./packages/docs/build/CNAME
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
