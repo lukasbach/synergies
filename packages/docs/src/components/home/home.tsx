@@ -135,7 +135,7 @@ export const Home: React.FC<{}> = props => {
   useHideBars();
   return (
     <Layout
-      title={`Synergies`}
+      title="Synergies"
       description="Use Global State. Reuse Local State."
     >
       <div className={styles.container}>
