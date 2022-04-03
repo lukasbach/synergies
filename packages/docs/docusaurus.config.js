@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Synergies',
   tagline: 'Synergyze your state!',
-  url: 'https://lukasbach.github.io/', // TODO
+  url: 'https://synergies.js.org/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -72,14 +72,14 @@ const config = {
             label: 'Docs',
           },
           {
-            href: 'https://synergies.js.org',
+            href: 'https://synergies.js.org/storybook',
             label: 'Storybook',
             position: 'left',
           },
           // {to: '/blog', label: 'Blog', position: 'left'},
           {
             label: 'Community',
-            href: "https://github.com/lukasbach/synergies/discussions/1",
+            href: "https://github.com/lukasbach/synergies/discussions",
             position: 'right',
           },
           {
@@ -114,11 +114,11 @@ const config = {
               },
               {
                 label: 'Community',
-                href: "https://github.com/lukasbach/synergies/discussions/1",
+                href: "https://github.com/lukasbach/synergies/discussions",
               },
               {
                 label: 'Storybook',
-                to: "https://synergies.js.org",
+                to: "https://synergies.js.org/storybook",
               },
             ],
           },
@@ -130,7 +130,7 @@ const config = {
                 href: 'https://github.com/lukasbach',
               },
               {
-                label: 'My personal homepage',
+                label: 'My homepage',
                 href: 'https://lukasbach.com',
               },
               {

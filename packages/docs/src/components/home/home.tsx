@@ -135,8 +135,8 @@ export const Home: React.FC<{}> = props => {
   useHideBars();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />"
+      title={`Synergies`}
+      description="Use Global State. Reuse Local State."
     >
       <div className={styles.container}>
         <div className={clsx(styles.title, styles.blue, styles.header)}>

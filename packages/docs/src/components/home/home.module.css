@@ -145,10 +145,10 @@
 }
 
 .left {
-  text-align: left;
+  text-align: left !important;
 }
 .right {
-  text-align: right;
+  text-align: right !important;
 }
 .floatRight {
   float: right;
