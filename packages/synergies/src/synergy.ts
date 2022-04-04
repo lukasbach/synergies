@@ -99,12 +99,12 @@ export class Synergy<T extends any[] = any[]> {
   }
 
   /** @internal */
-  createProviderState() {
+  createProviderState(initialState?: Record<symbol, any>) {
     return this.atoms.reduce<Record<symbol, AtomContextData<T[number]>>>(
       (acc, atom) => {
         acc[atom.id] = {
           listeners: new Set(),
-          value: atom.defaultValue,
+          value: initialState?.[atom.id] ?? atom.defaultValue,
         };
         return acc;
       },

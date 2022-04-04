@@ -8,4 +8,10 @@ export class Atom<T = any> extends Synergy<[T]> {
     super(ATOM_CONSTRUCTOR);
     this.id = Symbol(name);
   }
+
+  public createInitialValue(value: T) {
+    return {
+      [this.id]: value,
+    };
+  }
 }

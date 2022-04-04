@@ -184,3 +184,38 @@ component where the action or selector hooks are used.
 
 More details on nested providers and localized state reuse is given
 in [the section about nested providers](nesting).
+
+## Initial State of Atoms
+
+Apart from specifying a default state for each atom at the time of creation, you can also
+supply an initial state to the provider, either by directly declaring it:
+
+```typescript jsx
+<SynergyProvider 
+  atoms={[todosAtom, tickedTodosAtom]}
+  // highlight-start
+  initialState={{
+    [tickedTodosAtom.id]: ["initiallyTicked!"],
+    [todosAtom.id]: ["initiallyTicked!"]
+  }}
+  // highlight-end
+>
+  {/* ... */}
+</SynergyProvider>
+```
+
+or by using the type-helper in the atom class:
+
+```typescript jsx
+<SynergyProvider 
+  atoms={[todosAtom, tickedTodosAtom]}
+  // highlight-start
+  initialState={{
+    ...tickedTodosAtom.createInitialValue(["initiallyTicked!"])
+    ...todosAtom.createInitialValue(["initiallyTicked!"])
+  }}
+  // highlight-end
+>
+  {/* ... */}
+</SynergyProvider>
+```

@@ -26,6 +26,21 @@ describe("synergies", () => {
     </SynergyProvider>
   );
 
+  const wrapperWithInitialState: WrapperComponent<any> = ({ children }) => (
+    <SynergyProvider atoms={[parentAtomA, parentAtomB]}>
+      <SynergyProvider
+        atoms={[atomA, atomB, atomC]}
+        initialValue={{
+          ...atomA.createInitialValue(42),
+          ...atomB.createInitialValue(1337),
+          ...atomC.createInitialValue(666),
+        }}
+      >
+        {children}
+      </SynergyProvider>
+    </SynergyProvider>
+  );
+
   const middlewareWrapper =
     (middlewares: Middleware[]) =>
     // eslint-disable-next-line react/display-name
@@ -170,6 +185,32 @@ describe("synergies", () => {
 
       await waitForNextUpdate();
       expect(result.current.selector).toBe(42);
+    });
+
+    it("should handle providers with initial value", async () => {
+      const { result, waitForNextUpdate } = renderHooks(
+        {
+          action: () =>
+            atomA.createAction((newValue: number) => a => {
+              a.current = newValue;
+            })(),
+          selectorA: () => createSynergy(atomA).createSelector(a => a)(),
+          selectorB: () => createSynergy(atomB).createSelector(a => a)(),
+          selectorC: () => createSynergy(atomC).createSelector(a => a)(),
+        },
+        wrapperWithInitialState
+      );
+
+      expect(result.current.selectorA).toBe(42);
+      expect(result.current.selectorB).toBe(1337);
+      expect(result.current.selectorC).toBe(666);
+
+      act(() => {
+        result.current.action(1);
+      });
+
+      await waitForNextUpdate();
+      expect(result.current.selectorA).toBe(1);
     });
   });
 
