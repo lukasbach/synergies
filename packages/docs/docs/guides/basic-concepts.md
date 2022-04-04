@@ -128,6 +128,7 @@ You can then use the hook to get an action handler that dispatches the action.
 
 ```typescript jsx
 const Todo = ({ value, index }) => {
+  // highlight-next-line
   const tick = useTickTodo();
   return (
     <TodoItem onClick={() => tick(index)}>
@@ -169,9 +170,11 @@ mix and match atoms from different providers, as long as they are all available 
 component where the action or selector hooks are used.
 
 ```typescript jsx
+// highlight-next-line
 <SynergyProvider atoms={[todosAtom, tickedTodosAtom]}>
   {/* Can use only todosAtom and tickedTodosAtom */}
   <TodoList />
+  // highlight-next-line
   <SynergyProvider atoms={[inputAtom]}>
     {/* Can use all three atoms */}
     <TodoInput />

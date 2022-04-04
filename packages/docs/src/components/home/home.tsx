@@ -123,7 +123,7 @@ const Ctas = () => (
     <Link to="/docs/getstarted" className={clsx(styles.primaryCta)}>
       Get Started
     </Link>
-    <Link to="/docs/api" className={clsx(styles.primaryCta)}>
+    <Link to="/docs/guides/basic-concepts" className={clsx(styles.primaryCta)}>
       Documentation
     </Link>
   </div>
