@@ -10,3 +10,4 @@
   to an array item of an array kept within an atom, without rerendering everytime some
   random array item changes.
 - Use hooks of atoms/synergies directly, like `const action = createAction()`, then `useAction(action)`?
+- Add more relevant examples to todo

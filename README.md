@@ -7,6 +7,8 @@
 ![Pretty](https://github.com/lukasbach/synergies/workflows/Pretty/badge.svg)
 ![Storybook Deployment](https://github.com/lukasbach/synergies/workflows/Storybook%20Deployment/badge.svg)
 
+Find out more at [synergies.js.org](https://synergies.js.org/)!
+
 `synergies` is a tiny (>3kB), yet powerful state management library for React. It allows you to
 specify small state atoms, that you can combine into Synergys of multiple atoms that define shared state logic. 
 Features include
@@ -260,13 +262,6 @@ export const App = () => (
 ```
 
 ## Maintenance
-
-- Deployment automatically happens. Initialize GitHub Pages by going to the Repo's settings, scrolling down to
-  _GitHub Pages_, selecting the `gh-pages` branch and click on _Save_ (root directory is fine).
-- Implement your components and hooks by copying the template packages. Make sure to adapt the package names, repository
-  url and author in the respective `package.json` files.
-- Make sure to remove the template packages if you don't need them anymore. You can always copy them from the original
-  template repo again.
 
 When developing locally, run in the root directory...
 
