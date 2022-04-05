@@ -7,7 +7,7 @@ import {
 } from ".";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { WrapperComponent } from "@testing-library/react-hooks/src/types/react";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { RenderHookResult } from "@testing-library/react-hooks/src/types";
 import { NO_UPDATE } from "./helpers";
 
@@ -55,6 +55,12 @@ describe("synergies", () => {
         </MiddlewareProvider>
       );
 
+  type RenderHooksResult<T extends Record<string, any>> = RenderHookResult<
+    any,
+    T & Record<`${keyof T & string}UpdateCount`, { current: number }>,
+    any
+  >;
+
   const renderHooks = <T extends Record<string, any>>(
     hooks: {
       [K in keyof T]: () => T[K];
@@ -64,16 +70,38 @@ describe("synergies", () => {
     // TODO additionally render a useEffect hook with the result as dependency, to check for unnecessary rerenders
     return renderHook(
       () => {
-        return Object.entries(hooks).reduce(
-          (acc, [key, hook]) => ({
+        return Object.entries(hooks).reduce((acc, [key, hook]) => {
+          const result = hook();
+          const updateCount = useRef(-1);
+          useEffect(() => {
+            updateCount.current++;
+          }, [result]);
+          return {
             ...acc,
-            [key]: hook(),
-          }),
-          {}
-        );
+            [key]: result,
+            [`${key}UpdateCount`]: updateCount,
+          };
+        }, {});
       },
       { wrapper }
-    ) as RenderHookResult<any, T, any>;
+    ) as RenderHooksResult<T>;
+  };
+
+  const expectSelectors = <T extends Record<string, any>>(
+    result: Partial<RenderHooksResult<T>["result"]["current"]>,
+    checkMap: Partial<{
+      [K in keyof T]: [expectedValue: T[K], expectedUpdateCount?: number];
+    }>
+  ) => {
+    for (const [key, check] of Object.entries(checkMap)) {
+      const [expectedValue, expectedUpdateCount] = check;
+      expect(result[key]).toEqual(expectedValue);
+      if (expectedUpdateCount !== undefined) {
+        expect(result[`${key}UpdateCount`].current).toEqual(
+          expectedUpdateCount
+        );
+      }
+    }
   };
 
   describe("basic logic", () => {
@@ -109,18 +137,23 @@ describe("synergies", () => {
         selectorC: () => atomC.createSelector(a => a)(),
       });
 
-      expect(result.current.selectorA).toBe(1);
-      expect(result.current.selectorB).toBe(2);
-      expect(result.current.selectorC).toBe(3);
+      expectSelectors(result.current, {
+        selectorA: [1, 0],
+        selectorB: [2, 0],
+        selectorC: [3, 0],
+      });
 
       act(() => {
         result.current.action();
       });
 
       await waitForNextUpdate();
-      expect(result.current.selectorA).toBe(2);
-      expect(result.current.selectorB).toBe(4);
-      expect(result.current.selectorC).toBe(6);
+
+      expectSelectors(result.current, {
+        selectorA: [2, 1],
+        selectorB: [4, 1],
+        selectorC: [6, 1],
+      });
     });
 
     it("updates only written atoms", async () => {
@@ -134,18 +167,22 @@ describe("synergies", () => {
         selectorC: () => atomC.createSelector(a => a)(),
       });
 
-      expect(result.current.selectorA).toBe(1);
-      expect(result.current.selectorB).toBe(2);
-      expect(result.current.selectorC).toBe(3);
+      expectSelectors(result.current, {
+        selectorA: [1, 0],
+        selectorB: [2, 0],
+        selectorC: [3, 0],
+      });
 
       act(() => {
         result.current.action();
       });
 
       await waitForNextUpdate();
-      expect(result.current.selectorA).toBe(7);
-      expect(result.current.selectorB).toBe(2);
-      expect(result.current.selectorC).toBe(3);
+      expectSelectors(result.current, {
+        selectorA: [7, 1],
+        selectorB: [2, 0],
+        selectorC: [3, 0],
+      });
     });
 
     it("should handle selectors targeting multiple atoms", async () => {
@@ -166,6 +203,7 @@ describe("synergies", () => {
 
       await waitForNextUpdate();
       expect(result.current.selector).toStrictEqual([43, 2]);
+      expect(result.current.selectorUpdateCount.current).toEqual(1);
     });
 
     it("should handle actions with parameter", async () => {
@@ -185,6 +223,7 @@ describe("synergies", () => {
 
       await waitForNextUpdate();
       expect(result.current.selector).toBe(42);
+      expect(result.current.selectorUpdateCount.current).toEqual(1);
     });
 
     it("should handle providers with initial value", async () => {
@@ -201,16 +240,23 @@ describe("synergies", () => {
         wrapperWithInitialState
       );
 
-      expect(result.current.selectorA).toBe(42);
-      expect(result.current.selectorB).toBe(1337);
-      expect(result.current.selectorC).toBe(666);
+      expectSelectors(result.current, {
+        selectorA: [42, 0],
+        selectorB: [1337, 0],
+        selectorC: [666, 0],
+      });
 
       act(() => {
         result.current.action(1);
       });
 
       await waitForNextUpdate();
-      expect(result.current.selectorA).toBe(1);
+
+      expectSelectors(result.current, {
+        selectorA: [1, 1],
+        selectorB: [1337, 0],
+        selectorC: [666, 0],
+      });
     });
   });
 
@@ -224,8 +270,15 @@ describe("synergies", () => {
             }
           )(),
         selectorA: () => atomA.createSelector(a => a)(),
+        selectorB: () => atomB.createSelector(a => a)(),
+        selectorParetA: () => parentAtomA.createSelector(a => a)(),
       });
 
+      expectSelectors(result.current, {
+        selectorA: [1, 0],
+        selectorB: [2, 0],
+        selectorParetA: [10, 0],
+      });
       expect(result.current.selectorA).toBe(1);
 
       act(() => {
@@ -233,7 +286,11 @@ describe("synergies", () => {
       });
 
       await waitForNextUpdate();
-      expect(result.current.selectorA).toBe(13);
+      expectSelectors(result.current, {
+        selectorA: [13, 1],
+        selectorB: [2, 0],
+        selectorParetA: [10, 0],
+      });
     });
 
     it("should be able to write to parent providers", async () => {
@@ -248,6 +305,7 @@ describe("synergies", () => {
       });
 
       expect(result.current.selectorParentA).toBe(10);
+      expect(result.current.selectorParentAUpdateCount.current).toBe(0);
 
       act(() => {
         result.current.action();
@@ -255,6 +313,7 @@ describe("synergies", () => {
 
       await waitForNextUpdate();
       expect(result.current.selectorParentA).toBe(13);
+      expect(result.current.selectorParentAUpdateCount.current).toBe(1);
     });
   });
 
