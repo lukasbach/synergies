@@ -9,21 +9,22 @@
 
 Find out more at [synergies.js.org](https://synergies.js.org/)!
 
-`synergies` is a tiny (>3kB), yet powerful state management library for React. It allows you to
-specify small state atoms, that you can combine into Synergys of multiple atoms that define shared state logic. 
+`synergies` is a tiny (~3kB), yet powerful state management library for React. It allows you to
+specify small state atoms, that you can combine into Synergies of multiple atoms that define shared state logic. 
 Features include
 
 - __Distributed state__: You can inject individual atoms at multiple arbitrary points in your component hierarchy.
-  You can also inject multiple atoms in one provider. Your state logic can not only read and write to the atoms
+  This allows you to both define unique global state logic in your application root, and smaller reusable components 
+  that have their own context-based state. Your state logic can not only read and write to the atoms
   provided by the closest provider, but to all atoms provided upwards in the component hierarchy.
 - __Immutable update logic__: `synergies` uses `immer` to provide drafts of your state in your update handlers,
   so you can more easily update state.
 - __Performant update-triggers__: Even though a synergy provider can provide several atoms and can access any atoms
   from other providers upwards the hierarchy, calling update logic will only trigger updates on components
   that read from atoms that were actually changed. Again `immer` is used to let you update drafts of your state,
-  and smartly detects which atoms were actually changed and which ones were only read during the update.
-- __Asynchronous update logic__: No more thunk extensions! Update handlers can be asynchronous, and you can even 
-  manually trigger updates on any atoms while still being in the middle of the update handler.
+  and smartly detects which atoms were actually changed and which ones were only read from during the update.
+- __Asynchronous update logic__: No more thunk plugins! Update handlers can be asynchronous, and you can even 
+  manually trigger updates on certain atoms while still being in the middle of the update handler.
 - __Reusable state logic__: Since you can provide atom state rather low down in the hierarchy, you can reuse small
   pieces of state between components, while still maintaining more global parts of your app state farther up
   in the component hierarchy.
@@ -77,6 +78,11 @@ Provide your atoms:
   <SynergyProvider atoms={[moreLocalizedAtom]}>
     {/* Can read from and write to all three atoms. */}
   </SynergyProvider>
+  
+  {/* Reuse providers with more localized state */}
+  <SynergyProvider atoms={[moreLocalizedAtom]}>
+    {/* ... */}
+  </SynergyProvider>
 </SynergyProvider>
 ```
 
@@ -94,6 +100,8 @@ const Component = () => {
   )
 }
 ```
+
+You can find more examples and details at [synergies.js.org](https://synergies.js.org/)!
 
 ## More advanced examples
 
