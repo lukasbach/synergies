@@ -6,7 +6,8 @@
     "jsx": "react",
     "declaration": true,
     "module": "CommonJS",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleResolution": "Node"
   },
   "exclude": ["node_modules", "../**/*.spec.ts", "../**/*.spec.tsx"]
 }

@@ -10,13 +10,20 @@
   "author": "Lukas Bach",
   "license": "MIT",
   "private": false,
-  "main": "out/index.js",
-  "typings": "out/index.d.ts",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "esnext": "lib/esnext/index.js",
+  "typings": "lib/esm/index.d.ts",
   "scripts": {
-    "start": "tsc -w",
     "build": "tsc",
-    "test": "jest --passWithNoTests",
-    "prepublish": "tsc && jest && cpy \"../../README.md\" ."
+    "build:all": "run-p \"build:cjs\" \"build:esm\" \"build:esnext\" \"build:types\"",
+    "build:cjs": "tsc -m commonjs --outDir lib/cjs",
+    "build:types": "tsc --declaration true --emitDeclarationOnly --outDir lib/types",
+    "build:esm": "tsc -m es2015 --outDir lib/esm",
+    "build:esnext": "tsc -m esnext --outDir lib/esnext",
+    "start": "tsc -w",
+    "test": "jest",
+    "prepublish": "yarn build:all && yarn test && cpy \"../../README.md\" ."
   },
   "devDependencies": {
     "@babel/preset-env": "^7.12.11",
@@ -34,7 +41,8 @@
     "jest": "^26.6.3",
     "react-test-renderer": "^17.0.1",
     "ts-jest": "^26.4.4",
-    "typescript": "^4.1.2"
+    "typescript": "^4.1.2",
+    "npm-run-all": "^4.1.5"
   },
   "peerDependencies": {
     "immer": "*",

@@ -15,6 +15,7 @@
     "storybook": "lerna run storybook --parallel --npm-client=yarn",
     "build:storybook": "lerna run build:storybook --parallel --npm-client=yarn",
     "build": "lerna run build --npm-client=yarn",
+    "build:all-targets": "lerna run build:all --npm-client=yarn",
     "test": "lerna run test --npm-client=yarn --stream",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",

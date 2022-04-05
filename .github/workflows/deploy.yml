@@ -15,7 +15,7 @@ jobs:
         run: |
           yarn
           npx lerna bootstrap
-          yarn build
+          yarn build:all-targets
           yarn build:storybook
           yarn build:docs
           mv ./packages/stories/storybook-static/index.html ./packages/stories/storybook-static/index.htm
