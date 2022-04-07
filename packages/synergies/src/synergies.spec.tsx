@@ -5,10 +5,13 @@ import {
   Middleware,
   MiddlewareProvider,
 } from ".";
-import { renderHook, act } from "@testing-library/react-hooks";
-import { WrapperComponent } from "@testing-library/react-hooks/src/types/react";
+import {
+  renderHook,
+  act,
+  WrapperComponent,
+  RenderHookResult,
+} from "@testing-library/react-hooks";
 import React, { useEffect, useRef } from "react";
-import { RenderHookResult } from "@testing-library/react-hooks/src/types";
 import { NO_UPDATE } from "./helpers";
 
 describe("synergies", () => {

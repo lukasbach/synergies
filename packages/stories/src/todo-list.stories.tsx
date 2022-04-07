@@ -1,7 +1,7 @@
 import { createAtom, createSynergy, SynergyProvider } from "synergies";
 import { Button, Checkbox, ControlGroup, InputGroup } from "@blueprintjs/core";
 import React from "react";
-import { StorybookActionsMiddleware } from "./helpers";
+import { StorybookMiddlewareProvider } from "synergies-storybook-middleware";
 
 // Atom name is optional and for debugging through middleware
 const filterAtom = createAtom(false, "filter");
@@ -83,7 +83,7 @@ export const Example = () => (
   // We don't have to nest the providers so extremely, but this demonstrates how you can inject
   // atoms at any place in the hierarchy and they can still communicate upwards with other
   // atoms.
-  <StorybookActionsMiddleware>
+  <StorybookMiddlewareProvider>
     <SynergyProvider atoms={[filterAtom]}>
       <FilterButton />
       <SynergyProvider atoms={[itemsAtom]}>
@@ -93,7 +93,7 @@ export const Example = () => (
         </SynergyProvider>
       </SynergyProvider>
     </SynergyProvider>
-  </StorybookActionsMiddleware>
+  </StorybookMiddlewareProvider>
 );
 
 export default {

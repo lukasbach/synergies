@@ -7,6 +7,8 @@ import {
 import { Button } from "@blueprintjs/core";
 import React from "react";
 import { action } from "@storybook/addon-actions";
+import { StorybookMiddlewareProvider } from "synergies-storybook-middleware";
+import { LoggingMiddlewareProvider } from "synergies-logging-middleware";
 
 const countAtom = createAtom(0, "count");
 const useIncrease = countAtom.createAction(() => value => {
@@ -51,7 +53,7 @@ const middleware3: Middleware = next => atoms => {
   next(atoms);
 };
 
-export const Example = () => (
+export const MultiMiddlewares = () => (
   <MiddlewareProvider middlewares={[middleware3, middleware2, middleware1]}>
     <SynergyProvider atoms={[countAtom]}>
       <CounterButton />
@@ -64,6 +66,24 @@ export const Example = () => (
   </MiddlewareProvider>
 );
 
+export const LoggingMiddlewareExample = () => (
+  <LoggingMiddlewareProvider>
+    <SynergyProvider atoms={[countAtom]}>
+      <CounterButton />
+      See console for the middleware logs.
+    </SynergyProvider>
+  </LoggingMiddlewareProvider>
+);
+
+export const StorybookMiddlewareExample = () => (
+  <StorybookMiddlewareProvider>
+    <SynergyProvider atoms={[countAtom]}>
+      <CounterButton />
+      See actions tab for middleware action logs.
+    </SynergyProvider>
+  </StorybookMiddlewareProvider>
+);
+
 export default {
-  title: "Multiple Middlewares",
+  title: "Middlewares",
 };
