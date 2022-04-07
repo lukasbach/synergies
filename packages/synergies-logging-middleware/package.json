@@ -41,7 +41,8 @@
     "npm-run-all": "^4.1.5",
     "react-test-renderer": "^17.0.1",
     "ts-jest": "^26.4.4",
-    "typescript": "^4.1.2"
+    "typescript": "^4.1.2",
+    "synergies": "^1.1.1"
   },
   "peerDependencies": {
     "synergies": "*"
