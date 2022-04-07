@@ -32,6 +32,8 @@ Features include
 - __Tiny package__: 3kB + immer. Use it for your global app state, or just replace small context providers with
   `synergies` to simplify your codebase and speed up your state.
 
+<a href="https://www.producthunt.com/posts/synergies?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-synergies" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=339769&theme=light" alt="Synergies - A&#0032;performant&#0032;and&#0032;distributed&#0032;React&#0032;Context&#0032;State | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 ## Usage
 
 Get started by installing the library:
