@@ -6,7 +6,11 @@
     "url": "git@github.com:lukasbach/synergies.git",
     "directory": "packages/synergies"
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "./lib/cjs/produce-atoms.js",
+    "./lib/esm/produce-atoms.js",
+    "./lib/esnext/produce-atoms.js"
+  ],
   "author": "Lukas Bach",
   "license": "MIT",
   "private": false,
