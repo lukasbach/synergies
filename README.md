@@ -6,6 +6,11 @@
 ![Testing](https://github.com/lukasbach/synergies/workflows/Testing/badge.svg)
 ![Pretty](https://github.com/lukasbach/synergies/workflows/Pretty/badge.svg)
 ![Storybook Deployment](https://github.com/lukasbach/synergies/workflows/Storybook%20Deployment/badge.svg)
+![NPM Version](https://badgen.net/npm/v/synergies)
+![NPM Typings](https://badgen.net/npm/types/synergies)
+![Minzipped size](https://badgen.net/bundlephobia/minzip/synergies)
+![Treeshaking Report](https://badgen.net/bundlephobia/tree-shaking/synergies)
+![Packagephobia Report](https://badgen.net/packagephobia/install/synergies)
 
 Find out more at [synergies.js.org](https://synergies.js.org/)!
 
