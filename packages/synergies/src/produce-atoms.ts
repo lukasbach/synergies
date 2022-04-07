@@ -1,5 +1,5 @@
 import { AtomDraft, DraftTuple } from "./types";
-import { createDraft, enablePatches, finishDraft } from "immer";
+import { createDraft, finishDraft } from "immer";
 import { NO_UPDATE } from "./helpers";
 
 const createCustomDraft = (
@@ -41,5 +41,3 @@ export const produceAtoms = async <T extends any[]>(
     return hasChanged ? value.current : NO_UPDATE;
   });
 };
-
-enablePatches();

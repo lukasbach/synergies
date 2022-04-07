@@ -7,9 +7,9 @@
     "directory": "packages/synergies"
   },
   "sideEffects": [
-    "./lib/cjs/produce-atoms.js",
-    "./lib/esm/produce-atoms.js",
-    "./lib/esnext/produce-atoms.js"
+    "./lib/cjs/index.js",
+    "./lib/esm/index.js",
+    "./lib/esnext/index.js"
   ],
   "author": "Lukas Bach",
   "license": "MIT",
