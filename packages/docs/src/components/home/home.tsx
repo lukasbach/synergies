@@ -183,7 +183,7 @@ export const Home: React.FC<{}> = props => {
             <span className={styles.purple}>hierarchical structure</span> of
             your components.
           </div>
-          <VisAppComponents style={{ minWidth: "800px" }} />
+          <VisAppComponents className={styles.vis} />
         </div>
 
         <div className={clsx(styles.highlight, styles.statement, styles.right)}>

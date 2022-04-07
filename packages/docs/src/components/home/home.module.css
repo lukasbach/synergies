@@ -39,6 +39,10 @@
   margin-top: 200px !important;
 }
 
+.vis {
+  min-width: 800px;
+}
+
 .sides {
   display: flex;
   flex-direction: row;
@@ -162,13 +166,6 @@
   overflow: visible;
 }
 
-
-@media (max-width: 1000px) {
-  .menu {
-    float: none;
-  }
-}
-
 @media (max-width: 1800px) {
   .header > svg {
     width: 5rem;
@@ -195,5 +192,43 @@
   }
   .sides > :first-child {
     margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .menu {
+    float: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .container {
+    padding: 60px 40px !important;
+  }
+  .text {
+    font-size: 1rem;
+  }
+  .statement {
+    font-size: 2.8rem;
+  }
+  .title {
+    font-size: 1.6rem;
+  }
+  .header {
+    font-size: 3rem;
+  }
+  .codeContainer {
+    font-size: .7rem;
+    width: 100%;
+    overflow: auto;
+  }
+  .primaryCta {
+    font-size: 1.4rem;
+    padding: 10px 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .vis {
+    display: none;
   }
 }
