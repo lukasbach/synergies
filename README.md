@@ -1,7 +1,6 @@
 # Synergies
 
-> Create a performant distributed context state by synergyzing atomar
-> context pieces and composing reusable state logic.
+> Create a performant distributed context state for React and compose reusable state logic.
 
 ![Testing](https://github.com/lukasbach/synergies/workflows/Testing/badge.svg)
 ![Pretty](https://github.com/lukasbach/synergies/workflows/Pretty/badge.svg)

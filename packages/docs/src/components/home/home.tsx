@@ -130,8 +130,6 @@ const Ctas = () => (
 );
 
 export const Home: React.FC<{}> = props => {
-  const { siteConfig } = useDocusaurusContext();
-  console.log(siteConfig);
   useHideBars();
   return (
     <Layout
@@ -164,10 +162,8 @@ export const Home: React.FC<{}> = props => {
             <span className={styles.yellow}>
               performant distributed context state
             </span>{" "}
-            by <span className={styles.red}>synergizing</span> atomar context
-            pieces and{" "}
-            <span className={styles.green}>composing reusable state logic</span>
-            .
+            for <span className={styles.red}>React</span> and compose{" "}
+            <span className={styles.green}>reusable state logic</span>.
           </div>
           <div className={clsx()}>
             <Code code={introCode} />
@@ -185,36 +181,6 @@ export const Home: React.FC<{}> = props => {
           </div>
           <VisAppComponents className={styles.vis} />
         </div>
-
-        <div className={clsx(styles.highlight, styles.statement, styles.right)}>
-          First there was <Red>Flux</Red>. Than there was{" "}
-          <Purple>Context</Purple>. Now there is <Green>Synergies</Green>.
-        </div>
-
-        <p className={clsx(styles.text)}>
-          In the past, Flux-like libraries were the goto for state management.
-          With React{"'"}s revamp of context, storing localized reusable state
-          in custom context providers became more common. You don{"'"}t need to
-          define the complete state in one place, you can reuse pieces of state,
-          and compose them however you want. But there remain issues...
-        </p>
-
-        <div className={clsx(styles.highlight, styles.statement, styles.left)}>
-          Lots of <Yellow>boilerplate</Yellow>. Nontrivial{" "}
-          <Red>performance</Red> optimization. Messy data{" "}
-          <Purple>exchange between contexts</Purple>.
-        </div>
-
-        <p className={clsx(styles.text)}>
-          Synergies{" "}
-          <b>
-            <Green>solves those issues</Green>
-          </b>{" "}
-          by streamlining the way how global and local context-based state is
-          defined and managed, provides clear and concise logic for deciding
-          which component should rerender and which should not, and makes
-          exchange between substates super easy!
-        </p>
 
         <div
           className={clsx(
